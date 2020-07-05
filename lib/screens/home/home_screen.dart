@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
         elevation: 0,
         title: StreamBuilder<String>(
           stream: _homeBloc.outSearch,
-          initialData: 'MARKET EASY',
+          initialData: '',
           builder: (context, snapshot){
             if(snapshot.data.isEmpty)
               return Container(

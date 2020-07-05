@@ -42,7 +42,7 @@ class TopBar extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (context) => FilterScreen()
                 )
-              )
+              );
 
             },),
         ],
