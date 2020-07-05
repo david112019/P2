@@ -1,16 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:xlo/models/filter.dart';
 
-class OrderByField extends StatelessWidget {
-  OrderByField({this.onSaved, this.initialValue});
+class VendorTypeField extends StatelessWidget {
 
-  final FormFieldSetter<OrderBy> onSaved;
-  final OrderBy initialValue;
+  VendorTypeField({this.onSaved, this.initialValue});
+
+  final FormFieldSetter<int> onSaved;
+  final int initialValue;
 
   @override
   Widget build(BuildContext context) {
-    return FormField<OrderBy>(
+    return FormField<int>(
       initialValue: initialValue,
       onSaved: onSaved,
       builder: (state) {
@@ -18,24 +18,32 @@ class OrderByField extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                state.didChange(OrderBy.TIME);
+                if(state.value & VENDOR_TYPE_GERAL !=0 ){
+                  if(state.value & VENDOR_TYPE_HORTIFRUTIS !=0)
+                    state.didChange(state.value & ~VENDOR_TYPE_GERAL);
+                  else
+                    state.didChange(VENDOR_TYPE_HORTIFRUTIS );
+                } else{
+                    state.didChange(state.value | VENDOR_TYPE_GERAL);
+                }
+                  
               },
               child: Container(
                 height: 50,
-                width: 80,
+                width: 120,
                 decoration: BoxDecoration(
                     border: Border.all(
-                        color: state.value == OrderBy.TIME
+                        color: state.value & VENDOR_TYPE_GERAL != 0
                             ? Colors.transparent
                             : Colors.grey),
                     borderRadius: const BorderRadius.all(Radius.circular(50)),
-                    color: state.value == OrderBy.TIME
+                    color: state.value & VENDOR_TYPE_GERAL != 0
                         ? Colors.deepPurpleAccent
                         : Colors.transparent),
                 alignment: Alignment.center,
-                child: Text('Tempo',
+                child: Text('Geral',
                     style: TextStyle(
-                        color: state.value == OrderBy.TIME
+                        color: state.value & VENDOR_TYPE_GERAL != 0
                             ? Colors.white
                             : Colors.black)),
               ),
@@ -45,28 +53,36 @@ class OrderByField extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                state.didChange(OrderBy.PRICE);
+                if(state.value & VENDOR_TYPE_HORTIFRUTIS !=0 ){
+                  if(state.value & VENDOR_TYPE_GERAL !=0)
+                    state.didChange(state.value & ~VENDOR_TYPE_HORTIFRUTIS);
+                  else
+                    state.didChange(VENDOR_TYPE_GERAL );
+                } else{
+                  state.didChange(state.value | VENDOR_TYPE_HORTIFRUTIS);
+                }
+
               },
               child: Container(
                 height: 50,
-                width: 80,
+                width: 120,
                 decoration: BoxDecoration(
                     border: Border.all(
-                        color: state.value == OrderBy.PRICE
+                        color: state.value & VENDOR_TYPE_HORTIFRUTIS != 0
                             ? Colors.transparent
                             : Colors.grey),
                     borderRadius: const BorderRadius.all(Radius.circular(50)),
-                    color: state.value == OrderBy.PRICE
+                    color: state.value & VENDOR_TYPE_HORTIFRUTIS != 0
                         ? Colors.deepPurpleAccent
                         : Colors.transparent),
                 alignment: Alignment.center,
-                child: Text('Preço',
+                child: Text('Hortifrutis',
                     style: TextStyle(
-                        color: state.value == OrderBy.PRICE
+                        color: state.value & VENDOR_TYPE_HORTIFRUTIS != 0
                             ? Colors.white
                             : Colors.black)),
               ),
-            )
+            ),
           ],
         );
       },
