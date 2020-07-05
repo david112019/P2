@@ -18,13 +18,13 @@ class VendorTypeField extends StatelessWidget {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                if(state.value & VENDOR_TYPE_GERAL !=0 ){
-                  if(state.value & VENDOR_TYPE_HORTIFRUTIS !=0)
-                    state.didChange(state.value & ~VENDOR_TYPE_GERAL);
+                if(state.value & SECTION_TYPE_GERAL !=0 ){
+                  if(state.value & SECTION_TYPE_HORTIFRUTIS !=0)
+                    state.didChange(state.value & ~SECTION_TYPE_GERAL);
                   else
-                    state.didChange(VENDOR_TYPE_HORTIFRUTIS );
+                    state.didChange(SECTION_TYPE_HORTIFRUTIS );
                 } else{
-                    state.didChange(state.value | VENDOR_TYPE_GERAL);
+                    state.didChange(state.value | SECTION_TYPE_GERAL);
                 }
                   
               },
@@ -33,17 +33,17 @@ class VendorTypeField extends StatelessWidget {
                 width: 120,
                 decoration: BoxDecoration(
                     border: Border.all(
-                        color: state.value & VENDOR_TYPE_GERAL != 0
+                        color: state.value & SECTION_TYPE_GERAL != 0
                             ? Colors.transparent
                             : Colors.grey),
                     borderRadius: const BorderRadius.all(Radius.circular(50)),
-                    color: state.value & VENDOR_TYPE_GERAL != 0
+                    color: state.value & SECTION_TYPE_GERAL != 0
                         ? Colors.deepPurpleAccent
                         : Colors.transparent),
                 alignment: Alignment.center,
                 child: Text('Geral',
                     style: TextStyle(
-                        color: state.value & VENDOR_TYPE_GERAL != 0
+                        color: state.value & SECTION_TYPE_GERAL != 0
                             ? Colors.white
                             : Colors.black)),
               ),
@@ -53,13 +53,13 @@ class VendorTypeField extends StatelessWidget {
             ),
             GestureDetector(
               onTap: () {
-                if(state.value & VENDOR_TYPE_HORTIFRUTIS !=0 ){
-                  if(state.value & VENDOR_TYPE_GERAL !=0)
-                    state.didChange(state.value & ~VENDOR_TYPE_HORTIFRUTIS);
+                if(state.value & SECTION_TYPE_HORTIFRUTIS !=0 ){
+                  if(state.value & SECTION_TYPE_GERAL !=0)
+                    state.didChange(state.value & ~SECTION_TYPE_HORTIFRUTIS);
                   else
-                    state.didChange(VENDOR_TYPE_GERAL );
+                    state.didChange(SECTION_TYPE_GERAL );
                 } else{
-                  state.didChange(state.value | VENDOR_TYPE_HORTIFRUTIS);
+                  state.didChange(state.value | SECTION_TYPE_HORTIFRUTIS);
                 }
 
               },
@@ -68,17 +68,17 @@ class VendorTypeField extends StatelessWidget {
                 width: 120,
                 decoration: BoxDecoration(
                     border: Border.all(
-                        color: state.value & VENDOR_TYPE_HORTIFRUTIS != 0
+                        color: state.value & SECTION_TYPE_HORTIFRUTIS != 0
                             ? Colors.transparent
                             : Colors.grey),
                     borderRadius: const BorderRadius.all(Radius.circular(50)),
-                    color: state.value & VENDOR_TYPE_HORTIFRUTIS != 0
+                    color: state.value & SECTION_TYPE_HORTIFRUTIS != 0
                         ? Colors.deepPurpleAccent
                         : Colors.transparent),
                 alignment: Alignment.center,
                 child: Text('Hortifrutis',
                     style: TextStyle(
-                        color: state.value & VENDOR_TYPE_HORTIFRUTIS != 0
+                        color: state.value & SECTION_TYPE_HORTIFRUTIS != 0
                             ? Colors.white
                             : Colors.black)),
               ),

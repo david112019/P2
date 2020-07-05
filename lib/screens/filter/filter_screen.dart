@@ -4,7 +4,7 @@ import 'package:xlo/screens/filter/widgets/animated_button.dart';
 import 'package:xlo/screens/filter/widgets/order_by_field.dart';
 import 'package:xlo/screens/filter/widgets/price_range_field.dart';
 import 'package:xlo/screens/filter/widgets/section_title.dart';
-import 'package:xlo/screens/filter/widgets/vendor_type_field.dart';
+import 'package:xlo/screens/filter/widgets/section_type_field.dart';
 
 class FilterScreen extends StatefulWidget {
   @override
@@ -14,11 +14,20 @@ class FilterScreen extends StatefulWidget {
 class _FilterScreenState extends State<FilterScreen> {
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final ScrollController _scrollController = ScrollController();
+
+  Filter _filter = Filter(
+    maxPrice: 100,
+    minPrice: 10,
+    SectionType: SECTION_TYPE_GERAL,
+    orderBy: OrderBy.PRICE
+  );
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         elevation: 0,
         title: const Text("Filtro de busca"),
@@ -33,19 +42,20 @@ class _FilterScreenState extends State<FilterScreen> {
               children: <Widget>[
                 const SectionTitle(title: "Ordernar por:",),
                 OrderByField(
-                  initialValue: OrderBy.TIME,
+                  initialValue: _filter.orderBy,
                   onSaved: (v){
-
+                    _filter.orderBy = v;
                   }
                 ),
-
                 const SectionTitle(title: "Preço (R\$)",),
-                PriceRangeField(),
+                PriceRangeField(
+                  filter: _filter,
+                ),
                 const SectionTitle(title: "Tipo de Produto:",),
                 VendorTypeField(
-                  initialValue: VENDOR_TYPE_GERAL,
+                  initialValue: _filter.sectionType,
                   onSaved: (v){
-
+                    _filter.sectionType = v;
                   },
                 ),
                 const SizedBox(height: 200,)
@@ -54,7 +64,25 @@ class _FilterScreenState extends State<FilterScreen> {
           ),
           AnimatedButton(
             scrollController: _scrollController,
-            onTap: (){},
+            onTap: (){
+              if(_formKey.currentState.validate()){
+                _formKey.currentState.save();
+
+                if(_filter.maxPrice != null && _filter.minPrice != null){
+                  if(_filter.minPrice > _filter.maxPrice){
+                    _scaffoldKey.currentState.showSnackBar(
+                      SnackBar(
+                        content: const Text(
+                          'Valor Inválido de Preço'
+                        ),
+                        backgroundColor: Colors.deepPurple,
+                      )
+                    );
+                    return;
+                  }
+                }
+              }
+            },
           ),
         ],
       ),
