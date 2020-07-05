@@ -24,11 +24,11 @@ class OrderByField extends StatelessWidget {
                 height: 50,
                 width: 80,
                 decoration: BoxDecoration(
-                    border: Border.all(color: state.value  == OrderBy.TIME ? Colors.transparent : Colors.deepPurpleAccent),
+                    border: Border.all(color: state.value  == OrderBy.TIME ? Colors.transparent : Colors.grey),
                     borderRadius: const BorderRadius.all(Radius.circular(50)),
                     color: state.value  == OrderBy.TIME ? Colors.deepPurpleAccent : Colors.transparent),
                 alignment: Alignment.center,
-                child: Text('Tempo', style: TextStyle(color: state.value  == OrderBy.TIME ? Colors.white : Colors.deepPurpleAccent)),
+                child: Text('Tempo', style: TextStyle(color: state.value  == OrderBy.TIME ? Colors.white : Colors.black)),
               ),
             ),
             const SizedBox(width: 10,),
@@ -40,11 +40,11 @@ class OrderByField extends StatelessWidget {
                 height: 50,
                 width: 80,
                 decoration: BoxDecoration(
-                    border: Border.all(color: state.value  == OrderBy.PRICE ? Colors.transparent : Colors.deepPurpleAccent),
+                    border: Border.all(color: state.value  == OrderBy.PRICE ? Colors.transparent : Colors.grey),
                     borderRadius: const BorderRadius.all(Radius.circular(50)),
                     color: state.value  == OrderBy.PRICE ? Colors.deepPurpleAccent : Colors.transparent),
                 alignment: Alignment.center,
-                child: Text('Preço', style: TextStyle(color: state.value  == OrderBy.PRICE ? Colors.white : Colors.deepPurpleAccent)),
+                child: Text('Preço', style: TextStyle(color: state.value  == OrderBy.PRICE ? Colors.white : Colors.black)),
               ),
             )
           ],
