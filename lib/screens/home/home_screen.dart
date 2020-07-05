@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:xlo/blocs/home_bloc.dart';
 import 'package:xlo/commom/custom_drawer/custom_drawer.dart';
 import 'package:xlo/screens/home/widgets/search_dialog.dart';
+import 'package:xlo/screens/home/widgets/top_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -37,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         title: StreamBuilder<String>(
           stream: _homeBloc.outSearch,
           initialData: 'MARKET EASY',
@@ -83,6 +85,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       drawer: CustomDrawer(),
+      body: Column(
+        children: <Widget>[
+          TopBar(),
+        ],
+      ),
     );
   }
 
