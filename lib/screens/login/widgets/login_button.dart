@@ -24,8 +24,10 @@ class LoginButton extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             ),
-            onPressed: snapshot.data.enable ? () {
-              loginBloc.LoginWithEmail();
+            onPressed: snapshot.data.enable ? ()  async{
+              final bool success = await loginBloc.LoginWithEmail();
+              if(success)
+                Navigator.of(context).pop();
             } : null,
             child: snapshot.data.loading
                 ? CircularProgressIndicator( valueColor: AlwaysStoppedAnimation<Color>(Colors.white),)
