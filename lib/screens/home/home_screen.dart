@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:xlo/blocs/home_bloc.dart';
 import 'package:xlo/commom/custom_drawer/custom_drawer.dart';
+import 'package:xlo/models/ad.dart';
+import 'package:xlo/screens/home/widgets/product_tile.dart';
 import 'package:xlo/screens/home/widgets/search_dialog.dart';
 import 'package:xlo/screens/home/widgets/top_bar.dart';
 
@@ -23,17 +25,15 @@ class _HomeScreenState extends State<HomeScreen> {
       _homeBloc = homeBloc;
   }
 
-
   @override
   Widget build(BuildContext context) {
 
     _openSearch(String currentSearch) async {
       final String search = await showDialog(context: context,
-      builder: (context) => SearchDialog(currentSearch: currentSearch),
+        builder: (context) => SearchDialog(currentSearch: currentSearch),
       );
-
       if(search != null)
-        _homeBloc.setSeach(search);
+        _homeBloc.setSearch(search);
     }
 
     return Scaffold(
@@ -44,9 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
           initialData: '',
           builder: (context, snapshot){
             if(snapshot.data.isEmpty)
-              return Container(
-
-              );
+              return Container();
             else
               return GestureDetector(
                 onTap: () => _openSearch(snapshot.data),
@@ -62,36 +60,49 @@ class _HomeScreenState extends State<HomeScreen> {
           },
         ),
         actions: <Widget>[
-         StreamBuilder<String>(
-           stream: _homeBloc.outSearch,
-           initialData: '',
-           builder: (context, snapshot){
-             if(snapshot.data.isEmpty)
-               return IconButton(
-                 icon: Icon(Icons.search),
-                 onPressed: (){
-                   _openSearch("");
-                 },
-               );
-             else
-               return IconButton(
-                 icon: Icon(Icons.close),
-                 onPressed: (){
-                   _homeBloc.setSeach('');
-                 },
-               );
-           },
-         )
+          StreamBuilder<String>(
+            stream: _homeBloc.outSearch,
+            initialData: '',
+            builder: (context, snapshot){
+              if(snapshot.data.isEmpty)
+                return IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: (){
+                    _openSearch("");
+                  },
+                );
+              else
+                return IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: (){
+                    _homeBloc.setSearch('');
+                  },
+                );
+            },
+          ),
         ],
       ),
       drawer: CustomDrawer(),
       body: Column(
         children: <Widget>[
           TopBar(),
+          Expanded(
+            child: StreamBuilder<List<Ad>>(
+              stream: _homeBloc.outAd,
+              builder: (context, snapshot){
+                if(snapshot.data == null)
+                  return Container();
+                return ListView.builder(
+                    itemCount: snapshot.data.length,
+                    itemBuilder: (context, index){
+                      return ProductTile(snapshot.data[index]);
+                    }
+                );
+              },
+            ),
+          )
         ],
       ),
     );
   }
-
-
 }

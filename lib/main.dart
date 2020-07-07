@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:xlo/blocs/drawer_block.dart';
 import 'package:xlo/blocs/home_bloc.dart';
 import 'package:xlo/screens/base/base_screen.dart';
 
+import 'blocs/drawer_block.dart';
 void main() => runApp(MyApp());
-
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -27,6 +26,13 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.deepPurple,
         ),
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('pt', 'BR')
+        ],
         home: BaseScreen(),
       ),
     );
